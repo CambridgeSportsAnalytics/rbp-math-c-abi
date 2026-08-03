@@ -1,0 +1,35 @@
+Copyright (c) 2026 Cambridge Prediction Analytics, LLC.
+All rights reserved.
+
+This repository publishes the RBP Math Library C Application Binary Interface
+(the "Interface"), consisting of the header file(s) under include/ and
+associated documentation in this repository.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the Interface, to use, copy, modify, and distribute the Interface solely
+for developing, building, and shipping software that links against binary
+distributions of the RBP Math Library provided by Cambridge Sports Analytics
+under a separate license (the "Library License").
+
+This permission does not:
+
+  - grant a license to the RBP Math Library source code, algorithms, or
+    runtime binaries;
+  - grant a license to mint, forge, or bypass Library licensing;
+  - transfer any trademark rights in "RBP", "Relevance-Based Prediction",
+    "Cambridge Sports Analytics", or related names.
+
+Except as granted above, no rights are licensed under this LICENSE, whether
+by implication, estoppel, or otherwise. Use of Library binaries remains
+subject to the Library License and any commercial agreement with Cambridge
+Sports Analytics.
+
+THE INTERFACE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
+FROM, OUT OF, OR IN CONNECTION WITH THE INTERFACE OR THE USE OR OTHER
+DEALINGS IN THE INTERFACE.
+
+For product licensing and support, contact Cambridge Prediction Analytics.
