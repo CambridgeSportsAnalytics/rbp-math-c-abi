@@ -7,7 +7,7 @@ This repository contains the canonical header integrators use when binding C, C+
 | | |
 |---|---|
 | Header | [`include/rbp_math.h`](include/rbp_math.h) |
-| ABI version | `RBP_ABI_VERSION` / `rbp_abi_version()` (currently **2**) |
+| ABI version | `RBP_ABI_VERSION` / `rbp_abi_version()` (currently **4**) |
 | Shared library names | `librbp_math_lib.dylib` · `librbp_math_lib.so` · `rbp_math_lib.dll` |
 
 The full solution (Rust engine, packaging, license tooling) lives in a **private** repository. This repository exists so the call contract can stay public without disclosing our intellectual property.
@@ -63,7 +63,7 @@ Release binaries enforce licensing (`RBP_LICENSE` / `RBP_LICENSE_FILE`, and `RBP
 
 ## Keeping in sync
 
-The header is maintained as part of the private RBP Math Library source tree and **published here** for public consumption. Prefer this repository (or a release tag on it) as the public pin for bindings; bump or re-check when `RBP_ABI_VERSION` changes.
+The header is maintained in the private RBP Math Library tree (`ffi/include/rbp_math.h`) and **mirrored here** on change (CI from the private repo, or a manual local sync). See [SOURCE.md](SOURCE.md) for the private commit pin. Prefer this repository (or a release tag on it) as the public pin for bindings; re-check when `RBP_ABI_VERSION` changes.
 
 ## License
 

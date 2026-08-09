@@ -25,7 +25,7 @@
  * @code
  *   RbpPredictionResults *res = NULL;
  *   double y[N], x[N * K], theta[K], yhat[T_max];
- *   if (rbp_abi_version() != RBP_ABI_VERSION) { /* header vs binary mismatch */ }
+ *   if (rbp_abi_version() != RBP_ABI_VERSION) { return -1; } // ABI mismatch
  *   RbpStatus st = rbp_predict(
  *       y, N, x, N, K, RBP_LAYOUT_ROW_MAJOR, theta, K, NULL, &res);
  *   if (st != RBP_OK) {
@@ -107,8 +107,9 @@
  *   yhat_linear (T) — only if include_linear_regression was enabled
  *
  * Grid (even when retain is off):
- *   grid_yhat (scalar), grid insights (variable_weights / mctc / mctp / cctp /
- *   xi_solo_composite; K or N as documented below)
+ *   yhat length 1 holds the composite prediction; grid insights
+ *   (variable_weights / mctc / mctp / cctp / xi_solo_composite; K or N as
+ *   documented below)
  *
  * Grid only when retain is enabled (see retain options):
  *   grid cells — k_cells, combi_cells, ysolo_cells, per-censor yhat_cells, …
@@ -156,8 +157,8 @@
  * # ABI versioning
  * ::RBP_ABI_VERSION (this header) must match ::rbp_abi_version() from the loaded
  * library. Bump the constant when breaking this contract (signatures, enums,
- * ownership). Additive symbols may also bump the version (e.g. ABI 2 deep
- * results). Prefer checking at process start.
+ * ownership). Additive symbols may also bump the version. Prefer checking at
+ * process start.
  */
 
 #ifndef RBP_MATH_H
@@ -171,7 +172,7 @@ extern "C" {
 #endif
 
 /** Compile-time ABI version; must match ::rbp_abi_version(). */
-#define RBP_ABI_VERSION 2
+#define RBP_ABI_VERSION 4
 
 /**
  * Status codes returned by FFI entry points.
@@ -456,8 +457,8 @@ RbpStatus rbp_grid_options_set_inner_parallel_str(RbpGridOptions *opts, const ch
  * Run grid search (parallel when inner_parallel=auto and size gates pass:
  * Both and N≥250, or single censor and N≥5000).
  *
- * On success, @p out_results holds details; the composite scalar prediction is
- * also available via ::rbp_results_grid_yhat / ::rbp_results_has_grid_yhat.
+ * On success, @p out_results holds details including composite ``yhat`` of length 1
+ * (copy with ::rbp_results_copy_yhat).
  * Grid insights (MCTC/MCTP/…) are typically filled even when retain is off;
  * per-combination cell tensors require retain options.
  *
@@ -554,7 +555,7 @@ RbpStatus rbp_info_theta(
  * Any `out_*` pointer may be NULL to skip that output. Non-null buffers must
  * satisfy the length rules above (N / N / N / 1).
  */
-RbpStatus rbp_relevance_bundle(
+RbpStatus rbp_relevance_metrics(
     const double *x,
     size_t n_rows,
     size_t n_cols,
@@ -613,14 +614,6 @@ int32_t rbp_results_has_yhat_linear(const RbpPredictionResults *results);
  * @return ::RBP_ERR_INVALID_ARG if not available (enable include_linear_regression).
  */
 RbpStatus rbp_results_copy_yhat_linear(const RbpPredictionResults *results, double *out, size_t len);
-
-/** @return 1 if this handle was produced by ::rbp_grid with a composite scalar. */
-int32_t rbp_results_has_grid_yhat(const RbpPredictionResults *results);
-/**
- * Write the grid composite scalar prediction into @p out.
- * @return ::RBP_ERR_INVALID_ARG if not a grid result.
- */
-RbpStatus rbp_results_grid_yhat(const RbpPredictionResults *results, double *out);
 
 /**
  * Copy insight vectors populated by predict / maxfit (when stored on the handle).
