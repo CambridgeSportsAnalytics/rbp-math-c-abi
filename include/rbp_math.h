@@ -125,7 +125,7 @@
  *   adj_fit_multiplier:0=identity, 1=K, 2=log
  *   inv_method:        0=gaussian/LU, 1=cholesky, 2=pseudoinverse
  *   inner_parallel:    0=auto (default), 1=off  (maxfit/grid only)
- *   verify_missing_data / include_linear_regression:
+ *   verify_missing_data / include_linear_regression / verbose:
  *                      0 = off, non-zero = on
  *   percentile algorithm (process-wide): 0=full_sort, 1=order_statistics
  *
@@ -279,6 +279,8 @@ RbpStatus rbp_predict_options_set_inv_method(RbpPredictOptions *opts, int32_t va
 RbpStatus rbp_predict_options_set_verify_missing_data(RbpPredictOptions *opts, int32_t value);
 /** @param value Non-zero attaches linear-regression `yhat_linear` when available. */
 RbpStatus rbp_predict_options_set_include_linear_regression(RbpPredictOptions *opts, int32_t value);
+/** @param value Non-zero enables diagnostic status messages (default off). */
+RbpStatus rbp_predict_options_set_verbose(RbpPredictOptions *opts, int32_t value);
 
 /**
  * UTF-8 string forms of the matching int setters (case-insensitive where noted).
@@ -350,6 +352,7 @@ RbpStatus rbp_maxfit_options_set_adj_fit_multiplier(RbpMaxFitOptions *opts, int3
 RbpStatus rbp_maxfit_options_set_inv_method(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_verify_missing_data(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_include_linear_regression(RbpMaxFitOptions *opts, int32_t value);
+RbpStatus rbp_maxfit_options_set_verbose(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_censor_type_str(RbpMaxFitOptions *opts, const char *value);
 /**
  * Within-call parallel autopick for MaxFit (over censor types when Both).
@@ -438,6 +441,7 @@ RbpStatus rbp_grid_options_set_adj_fit_multiplier(RbpGridOptions *opts, int32_t 
 RbpStatus rbp_grid_options_set_inv_method(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_verify_missing_data(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_include_linear_regression(RbpGridOptions *opts, int32_t value);
+RbpStatus rbp_grid_options_set_verbose(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_censor_type_str(RbpGridOptions *opts, const char *value);
 /**
  * Within-call parallel autopick for Grid (over attribute combinations).
