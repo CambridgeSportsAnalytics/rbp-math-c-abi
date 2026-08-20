@@ -108,8 +108,9 @@
  *
  * Grid (even when retain is off):
  *   yhat length 1 holds the composite prediction; grid insights
- *   (variable_weights / mctc / mctp / cctp / xi_solo_composite; K or N as
- *   documented below)
+ *   (variable_weights / mctc / mctp / cctp; K as documented below).
+ *   xi_solo_composite (N) and composite ysolo_sigma are filled only when
+ *   retain includes ysolo_distribution.
  *
  * Grid only when retain is enabled (see retain options):
  *   grid cells — k_cells, combi_cells, ysolo_cells, per-censor yhat_cells, …
@@ -705,10 +706,12 @@ RbpStatus rbp_results_copy_ysolo_bin_widths(const RbpPredictionResults *results,
 RbpStatus rbp_results_copy_ysolo_bin_counts(const RbpPredictionResults *results, double *out, size_t len, int32_t layout);
 
 /**
- * Grid insights (typically filled on successful grid, independent of retain).
+ * Grid insights (typically filled on successful grid).
  * Lengths: variable_weights, mctc, mctp, cctp → K; xi_solo_composite → N.
  * Semantics: MCTC = marginal contribution to conviction; MCTP = prediction;
  * CCTP = component contribution to prediction.
+ * xi_solo_composite is omitted on lean Grid (copy returns invalid-arg);
+ * retain key ysolo_distribution computes and fills it.
  */
 int32_t rbp_results_has_grid_insights(const RbpPredictionResults *results);
 RbpStatus rbp_results_copy_variable_weights(const RbpPredictionResults *results, double *out, size_t len);
