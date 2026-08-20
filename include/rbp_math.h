@@ -122,6 +122,7 @@
  *                      2=both (maxfit/grid only; invalid for predict)
  *   censor_unit:       0=score, 1=percent
  *   censor_operator:   0=gt, 1=lt, 2=gte, 3=lte
+ *                      (new option handles default to 2=gte)
  *   prediction_scale:  0=response (y scale), 1=logistic
  *   adj_fit_multiplier:0=identity, 1=K, 2=log
  *   inv_method:        0=gaussian/LU, 1=cholesky, 2=pseudoinverse
