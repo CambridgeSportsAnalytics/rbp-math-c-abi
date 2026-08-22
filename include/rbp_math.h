@@ -126,8 +126,11 @@
  *   prediction_scale:  0=response (y scale), 1=logistic
  *   adj_fit_multiplier:0=identity, 1=K, 2=log
  *   inv_method:        0=gaussian/LU, 1=cholesky, 2=pseudoinverse
+ *   missing_moments:   0=pairwise (default), 1=complete
  *   inner_parallel:    0=auto (default), 1=off  (maxfit/grid only)
- *   verify_missing_data / include_linear_regression / verbose:
+ *   verify_missing_data (deprecated alias for missing_moments):
+ *                      0 = pairwise, non-zero = complete
+ *   include_linear_regression / verbose:
  *                      0 = off, non-zero = on
  *   percentile algorithm (process-wide): 0=full_sort, 1=order_statistics
  *
@@ -277,7 +280,9 @@ RbpStatus rbp_predict_options_set_prediction_scale(RbpPredictOptions *opts, int3
 RbpStatus rbp_predict_options_set_adj_fit_multiplier(RbpPredictOptions *opts, int32_t value);
 /** @param value 0=gaussian/LU, 1=cholesky, 2=pseudoinverse */
 RbpStatus rbp_predict_options_set_inv_method(RbpPredictOptions *opts, int32_t value);
-/** @param value Non-zero enables missing-data verification. */
+/** @param value 0=pairwise (default), 1=complete. How μ/Σ/PSR N treat NaNs. */
+RbpStatus rbp_predict_options_set_missing_moments(RbpPredictOptions *opts, int32_t value);
+/** Deprecated alias: non-zero → complete moments (`set_missing_moments(1)`). */
 RbpStatus rbp_predict_options_set_verify_missing_data(RbpPredictOptions *opts, int32_t value);
 /** @param value Non-zero attaches linear-regression `yhat_linear` when available. */
 RbpStatus rbp_predict_options_set_include_linear_regression(RbpPredictOptions *opts, int32_t value);
@@ -352,6 +357,7 @@ RbpStatus rbp_maxfit_options_set_censor_operator(RbpMaxFitOptions *opts, int32_t
 RbpStatus rbp_maxfit_options_set_prediction_scale(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_adj_fit_multiplier(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_inv_method(RbpMaxFitOptions *opts, int32_t value);
+RbpStatus rbp_maxfit_options_set_missing_moments(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_verify_missing_data(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_include_linear_regression(RbpMaxFitOptions *opts, int32_t value);
 RbpStatus rbp_maxfit_options_set_verbose(RbpMaxFitOptions *opts, int32_t value);
@@ -441,6 +447,7 @@ RbpStatus rbp_grid_options_set_censor_operator(RbpGridOptions *opts, int32_t val
 RbpStatus rbp_grid_options_set_prediction_scale(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_adj_fit_multiplier(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_inv_method(RbpGridOptions *opts, int32_t value);
+RbpStatus rbp_grid_options_set_missing_moments(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_verify_missing_data(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_include_linear_regression(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_verbose(RbpGridOptions *opts, int32_t value);
