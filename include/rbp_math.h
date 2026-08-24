@@ -127,9 +127,11 @@
  *   adj_fit_multiplier:0=identity, 1=K, 2=log
  *   inv_method:        0=gaussian/LU, 1=cholesky, 2=pseudoinverse
  *   missing_moments:   0=pairwise (default), 1=complete
+ *                      (predict/maxfit only; Grid chooses per combination)
  *   inner_parallel:    0=auto (default), 1=off  (maxfit/grid only)
  *   verify_missing_data (deprecated alias for missing_moments):
  *                      0 = pairwise, non-zero = complete
+ *                      (predict/maxfit only; not a Grid option)
  *   include_linear_regression / verbose:
  *                      0 = off, non-zero = on
  *   percentile algorithm (process-wide): 0=full_sort, 1=order_statistics
@@ -447,8 +449,6 @@ RbpStatus rbp_grid_options_set_censor_operator(RbpGridOptions *opts, int32_t val
 RbpStatus rbp_grid_options_set_prediction_scale(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_adj_fit_multiplier(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_inv_method(RbpGridOptions *opts, int32_t value);
-RbpStatus rbp_grid_options_set_missing_moments(RbpGridOptions *opts, int32_t value);
-RbpStatus rbp_grid_options_set_verify_missing_data(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_include_linear_regression(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_verbose(RbpGridOptions *opts, int32_t value);
 RbpStatus rbp_grid_options_set_censor_type_str(RbpGridOptions *opts, const char *value);
