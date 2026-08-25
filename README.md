@@ -7,7 +7,7 @@ This repository contains the canonical header integrators use when binding C, C+
 | | |
 |---|---|
 | Header | [`include/rbp_math.h`](include/rbp_math.h) |
-| ABI version | `RBP_ABI_VERSION` / `rbp_abi_version()` (currently **4**) |
+| ABI version | `RBP_ABI_VERSION` / `rbp_abi_version()` (currently **5**) |
 | Shared library names | `librbp_math_lib.dylib` · `librbp_math_lib.so` · `rbp_math_lib.dll` |
 
 The full solution (Rust engine, packaging, license tooling) lives in a **private** repository. This repository exists so the call contract can stay public without disclosing our intellectual property.

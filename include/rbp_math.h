@@ -129,6 +129,9 @@
  *   missing_moments:   0=pairwise (default), 1=complete
  *                      (predict/maxfit only; Grid chooses per combination)
  *   inner_parallel:    0=auto (default), 1=off  (maxfit/grid only)
+ *   adjust_impact_for_missing (grid only):
+ *                      0 = off (pre-adjustment / PSR parity),
+ *                      non-zero = on (default)
  *   verify_missing_data (deprecated alias for missing_moments):
  *                      0 = pairwise, non-zero = complete
  *                      (predict/maxfit only; not a Grid option)
@@ -179,7 +182,7 @@ extern "C" {
 #endif
 
 /** Compile-time ABI version; must match ::rbp_abi_version(). */
-#define RBP_ABI_VERSION 4
+#define RBP_ABI_VERSION 5
 
 /**
  * Status codes returned by FFI entry points.
@@ -402,7 +405,8 @@ RbpStatus rbp_maxfit(
 
 /**
  * Allocate Grid options (default max_iter=1000, k=1, seed=42, retain none,
- * censor Both, thresholds `[0,0.2,0.5,0.8]`, inner_parallel auto).
+ * censor Both, thresholds `[0,0.2,0.5,0.8]`, inner_parallel auto,
+ * adjust_impact_for_missing on).
  */
 RbpGridOptions *rbp_grid_options_create(void);
 
@@ -439,6 +443,12 @@ RbpStatus rbp_grid_options_set_attribute_combi(
     size_t n_rows,
     size_t n_cols,
     int32_t layout);
+/**
+ * Incomplete-column IOF/IOP vs a 0/1 include-k null (default on).
+ * Does not rewrite composite yhat / fit. Complete columns unchanged.
+ * @param value non-zero = on, 0 = off (pre-adjustment baseline / PSR parity)
+ */
+RbpStatus rbp_grid_options_set_adjust_impact_for_missing(RbpGridOptions *opts, int32_t value);
 
 RbpStatus rbp_grid_options_set_threshold(
     RbpGridOptions *opts, const double *values, size_t len);
@@ -461,16 +471,6 @@ RbpStatus rbp_grid_options_set_censor_type_str(RbpGridOptions *opts, const char 
 RbpStatus rbp_grid_options_set_inner_parallel(RbpGridOptions *opts, int32_t value);
 /** @param value `"auto"` or `"off"` (and other off aliases; see file overview) */
 RbpStatus rbp_grid_options_set_inner_parallel_str(RbpGridOptions *opts, const char *value);
-/**
- * Subtract 0/1-garbage IOF/IOP for columns with missing values (default on).
- * @param value non-zero = on, 0 = off (pre-adjustment baseline)
- */
-RbpStatus rbp_grid_options_set_adjust_missing_importance(RbpGridOptions *opts, int32_t value);
-/**
- * Subtract 0/1-garbage IOF/IOP for columns with missing values (default on).
- * @param value non-zero = on, 0 = off (pre-adjustment baseline / PSR parity)
- */
-RbpStatus rbp_grid_options_set_adjust_missing_importance(RbpGridOptions *opts, int32_t value);
 
 /* =========================================================================
  * Grid
