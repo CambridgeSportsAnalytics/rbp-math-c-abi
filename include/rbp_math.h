@@ -461,6 +461,16 @@ RbpStatus rbp_grid_options_set_censor_type_str(RbpGridOptions *opts, const char 
 RbpStatus rbp_grid_options_set_inner_parallel(RbpGridOptions *opts, int32_t value);
 /** @param value `"auto"` or `"off"` (and other off aliases; see file overview) */
 RbpStatus rbp_grid_options_set_inner_parallel_str(RbpGridOptions *opts, const char *value);
+/**
+ * Subtract 0/1-garbage IOF/IOP for columns with missing values (default on).
+ * @param value non-zero = on, 0 = off (pre-adjustment baseline)
+ */
+RbpStatus rbp_grid_options_set_adjust_missing_importance(RbpGridOptions *opts, int32_t value);
+/**
+ * Subtract 0/1-garbage IOF/IOP for columns with missing values (default on).
+ * @param value non-zero = on, 0 = off (pre-adjustment baseline / PSR parity)
+ */
+RbpStatus rbp_grid_options_set_adjust_missing_importance(RbpGridOptions *opts, int32_t value);
 
 /* =========================================================================
  * Grid
