@@ -496,8 +496,68 @@ RbpStatus rbp_grid(
     int32_t x_layout,
     const double *theta,
     size_t k,
-    const RbpGridOptions *options,
+    const     RbpGridOptions *options,
     RbpPredictionResults **out_results);
+
+/* =========================================================================
+ * Packed model calls (MATLAB loadlibrary / SimpleFunctionThunk)
+ * =========================================================================
+ *
+ * Full rbp_predict / rbp_maxfit / rbp_grid arities exceed MATLAB's generic
+ * thunk argument limit. These entry points take one struct pointer instead.
+ * Layout is pointer-sized fields only (x_layout is int64, 0=row / 1=column).
+ */
+typedef struct RbpModelCall {
+    const double *y;
+    size_t n;
+    const double *x;
+    size_t n_rows;
+    size_t n_cols;
+    int64_t x_layout;
+    const double *theta;
+    size_t k;
+    const void *options;
+    RbpPredictionResults **out_results;
+} RbpModelCall;
+
+RbpStatus rbp_predict_call(const RbpModelCall *args);
+RbpStatus rbp_maxfit_call(const RbpModelCall *args);
+RbpStatus rbp_grid_call(const RbpModelCall *args);
+
+typedef struct RbpInsightCall {
+    const double *x;
+    size_t n_rows;
+    size_t n_cols;
+    int64_t x_layout;
+    const double *theta;
+    size_t k;
+    double *out;
+    size_t out_len;
+} RbpInsightCall;
+
+RbpStatus rbp_relevance_call(const RbpInsightCall *args);
+RbpStatus rbp_similarity_call(const RbpInsightCall *args);
+RbpStatus rbp_info_x_call(const RbpInsightCall *args);
+RbpStatus rbp_info_theta_call(const RbpInsightCall *args);
+
+typedef struct RbpRelevanceMetricsCall {
+    const double *x;
+    size_t n_rows;
+    size_t n_cols;
+    int64_t x_layout;
+    const double *theta;
+    size_t k;
+    double *out_relevance;
+    size_t out_relevance_len;
+    double *out_similarity;
+    size_t out_similarity_len;
+    double *out_info_x;
+    size_t out_info_x_len;
+    double *out_info_theta;
+    size_t out_info_theta_len;
+} RbpRelevanceMetricsCall;
+
+RbpStatus rbp_relevance_metrics_call(const RbpRelevanceMetricsCall *args);
 
 /* =========================================================================
  * Insights (standalone — no predict call required)
