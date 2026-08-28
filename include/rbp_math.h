@@ -156,7 +156,7 @@
  *   retain policy:   "true"|"1"|"all" | "false"|"0"|"none" |
  *                    comma-separated keys (optional `[…]` brackets):
  *                    yhat_cells, adjusted_fit_cells, n_cells, weights_cells,
- *                    k_cells, combi_cells, ysolo_distribution
+ *                    k_cells, combi_cells, ysolo_distribution, ysolo_cells
  *
  * # Licensing
  * Release builds enforce entitlements at predict / maxfit / grid entry points.
@@ -225,6 +225,13 @@ typedef struct RbpPredictionResults RbpPredictionResults;
  * Compare to ::RBP_ABI_VERSION from this header.
  */
 uint32_t rbp_abi_version(void);
+
+/**
+ * @return Crate semver compiled into the shared library (e.g. `"1.3.1"`).
+ * Distinct from ::rbp_abi_version (header / symbol contract). Do **not** free.
+ * Lifetime is the process. Missing on libraries older than 1.3.1.
+ */
+const char *rbp_engine_version(void);
 
 /**
  * Most recent error message on this thread, or empty string if none.
