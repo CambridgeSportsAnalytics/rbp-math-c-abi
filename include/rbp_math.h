@@ -451,7 +451,7 @@ RbpStatus rbp_grid_options_set_attribute_combi(
     size_t n_cols,
     int32_t layout);
 /**
- * Incomplete-column IOF/IOP vs a 0/1 include-k null (default on).
+ * Incomplete-column IOF/IOP vs a μ+σZ include-k null (default on).
  * Does not rewrite composite yhat / fit. Complete columns unchanged.
  * @param value non-zero = on, 0 = off (pre-adjustment baseline / PSR parity)
  */
