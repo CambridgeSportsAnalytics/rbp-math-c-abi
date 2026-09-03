@@ -227,7 +227,7 @@ typedef struct RbpPredictionResults RbpPredictionResults;
 uint32_t rbp_abi_version(void);
 
 /**
- * @return Crate semver compiled into the shared library (e.g. `"1.3.2"`).
+ * @return Crate semver compiled into the shared library (e.g. `"1.3.3"`).
  * Distinct from ::rbp_abi_version (header / symbol contract). Do **not** free.
  * Lifetime is the process. Missing on libraries older than 1.3.1.
  */
