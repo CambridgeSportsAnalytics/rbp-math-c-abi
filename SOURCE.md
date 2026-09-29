@@ -4,6 +4,6 @@
 |-------|--------|
 | Published from | Private `rbp-math-lib` tree (`ffi/include/rbp_math.h`) |
 | Public path | `include/rbp_math.h` |
-| Private commit | `d2d064abaa4ced44883325b03e1b41e085034de5` |
-| Synced at (UTC) | 2026-09-28T23:06Z |
+| Private commit | `ff4b4ba59aac8a32eca8a4593118b9473dea4b4f` |
+| Synced at (UTC) | 2026-09-29T03:25Z |
 | RBP_ABI_VERSION | 5 |
