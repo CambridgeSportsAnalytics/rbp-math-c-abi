@@ -182,7 +182,7 @@ extern "C" {
 #endif
 
 /** Compile-time ABI version; must match ::rbp_abi_version(). */
-#define RBP_ABI_VERSION 6
+#define RBP_ABI_VERSION 7
 
 /**
  * Status codes returned by FFI entry points.
@@ -227,7 +227,7 @@ typedef struct RbpPredictionResults RbpPredictionResults;
 uint32_t rbp_abi_version(void);
 
 /**
- * @return Crate semver compiled into the shared library (e.g. `"1.3.8"`).
+ * @return Crate semver compiled into the shared library (e.g. `"1.3.9"`).
  * Distinct from ::rbp_abi_version (header / symbol contract). Do **not** free.
  * Lifetime is the process. Missing on libraries older than 1.3.1.
  */
@@ -433,6 +433,16 @@ RbpStatus rbp_grid_options_set_k(RbpGridOptions *opts, size_t value);
  * Set it equal to `min_k` for combinations of exactly that size.
  */
 RbpStatus rbp_grid_options_set_max_k(RbpGridOptions *opts, size_t value);
+/**
+ * Exact combination sizes that may be sampled, such as `{1, 3, 7, 10}`.
+ * Replaces `min_k` / `max_k`: call this or the band setters, not both.
+ * `len == 0` is rejected. Each value must be at least 1. Duplicates are rejected.
+ * Order does not matter.
+ */
+RbpStatus rbp_grid_options_set_allowed_k(
+    RbpGridOptions *opts,
+    const size_t *values,
+    size_t len);
 /** RNG seed for combination sampling. */
 RbpStatus rbp_grid_options_set_seed(RbpGridOptions *opts, uint32_t value);
 
