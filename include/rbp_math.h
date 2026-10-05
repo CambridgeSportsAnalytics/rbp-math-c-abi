@@ -182,7 +182,7 @@ extern "C" {
 #endif
 
 /** Compile-time ABI version; must match ::rbp_abi_version(). */
-#define RBP_ABI_VERSION 5
+#define RBP_ABI_VERSION 6
 
 /**
  * Status codes returned by FFI entry points.
@@ -227,7 +227,7 @@ typedef struct RbpPredictionResults RbpPredictionResults;
 uint32_t rbp_abi_version(void);
 
 /**
- * @return Crate semver compiled into the shared library (e.g. `"1.3.7"`).
+ * @return Crate semver compiled into the shared library (e.g. `"1.3.8"`).
  * Distinct from ::rbp_abi_version (header / symbol contract). Do **not** free.
  * Lifetime is the process. Missing on libraries older than 1.3.1.
  */
@@ -422,8 +422,17 @@ void rbp_grid_options_free(RbpGridOptions *opts);
 
 /** @param value Must be > 0. Caps combination search iterations. */
 RbpStatus rbp_grid_options_set_max_iter(RbpGridOptions *opts, size_t value);
-/** @param value Must be > 0. Minimum combination size (`min_k`). */
+/**
+ * Minimum combination size (`min_k`). Must be at least 1.
+ * When `max_k` is already set, `value` cannot be above it.
+ */
 RbpStatus rbp_grid_options_set_k(RbpGridOptions *opts, size_t value);
+/**
+ * Maximum combination size. Must be at least 1 and at least the current `min_k`.
+ * Omit this call to let combinations grow up to every attribute.
+ * Set it equal to `min_k` for combinations of exactly that size.
+ */
+RbpStatus rbp_grid_options_set_max_k(RbpGridOptions *opts, size_t value);
 /** RNG seed for combination sampling. */
 RbpStatus rbp_grid_options_set_seed(RbpGridOptions *opts, uint32_t value);
 
