@@ -422,7 +422,7 @@ void rbp_grid_options_free(RbpGridOptions *opts);
 
 /** @param value Must be > 0. Caps combination search iterations. */
 RbpStatus rbp_grid_options_set_max_iter(RbpGridOptions *opts, size_t value);
-/** @param value Must be > 0. Combination size / sampling parameter. */
+/** @param value Must be > 0. Minimum combination size (`min_k`). */
 RbpStatus rbp_grid_options_set_k(RbpGridOptions *opts, size_t value);
 /** RNG seed for combination sampling. */
 RbpStatus rbp_grid_options_set_seed(RbpGridOptions *opts, uint32_t value);
@@ -445,6 +445,28 @@ RbpStatus rbp_grid_options_set_retain_grid_objects_str(RbpGridOptions *opts, con
  * @param layout ::RbpLayout for @p data
  */
 RbpStatus rbp_grid_options_set_attribute_combi(
+    RbpGridOptions *opts,
+    const double *data,
+    size_t n_rows,
+    size_t n_cols,
+    int32_t layout);
+
+/**
+ * Length-K 0/1 mask of attributes that are on in every generated combination.
+ * Cannot be combined with ::rbp_grid_options_set_attribute_combi.
+ */
+RbpStatus rbp_grid_options_set_required_attributes(
+    RbpGridOptions *opts,
+    const double *data,
+    size_t len);
+
+/**
+ * G×K 0/1 mask, one row per group of attributes selected together.
+ * Rows must be disjoint. Cannot be combined with
+ * ::rbp_grid_options_set_attribute_combi.
+ * @param layout ::RbpLayout for @p data
+ */
+RbpStatus rbp_grid_options_set_attribute_groups(
     RbpGridOptions *opts,
     const double *data,
     size_t n_rows,
