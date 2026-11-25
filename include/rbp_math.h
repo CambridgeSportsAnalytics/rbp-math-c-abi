@@ -108,7 +108,7 @@
  *
  * Grid (even when retain is off):
  *   yhat length 1 holds the composite prediction; grid insights
- *   (variable_weights / mctc / mctp / cctp; K as documented below).
+ *   (variable_weights / mctr / mctp / cctp; K as documented below).
  *   xi_solo_composite (N) and composite ysolo_sigma are filled only when
  *   retain includes ysolo_distribution.
  *
@@ -182,7 +182,7 @@ extern "C" {
 #endif
 
 /** Compile-time ABI version; must match ::rbp_abi_version(). */
-#define RBP_ABI_VERSION 7
+#define RBP_ABI_VERSION 8
 
 /**
  * Status codes returned by FFI entry points.
@@ -530,7 +530,7 @@ RbpStatus rbp_grid_options_set_inner_parallel_str(RbpGridOptions *opts, const ch
  *
  * On success, @p out_results holds details including composite ``yhat`` of length 1
  * (copy with ::rbp_results_copy_yhat).
- * Grid insights (MCTC/MCTP/…) are typically filled even when retain is off;
+ * Grid insights (MCTR/MCTP/…) are typically filled even when retain is off;
  * per-combination cell tensors require retain options.
  *
  * Argument contract matches ::rbp_predict.
@@ -833,15 +833,15 @@ RbpStatus rbp_results_copy_ysolo_bin_counts(const RbpPredictionResults *results,
 
 /**
  * Grid insights (typically filled on successful grid).
- * Lengths: variable_weights, mctc, mctp, cctp → K; xi_solo_composite → N.
- * Semantics: MCTC = marginal contribution to conviction; MCTP = prediction;
+ * Lengths: variable_weights, mctr, mctp, cctp → K; xi_solo_composite → N.
+ * Semantics: MCTR = marginal contribution to reliability; MCTP = prediction;
  * CCTP = component contribution to prediction.
  * xi_solo_composite is omitted on lean Grid (copy returns invalid-arg);
  * retain key ysolo_distribution computes and fills it.
  */
 int32_t rbp_results_has_grid_insights(const RbpPredictionResults *results);
 RbpStatus rbp_results_copy_variable_weights(const RbpPredictionResults *results, double *out, size_t len);
-RbpStatus rbp_results_copy_mctc(const RbpPredictionResults *results, double *out, size_t len);
+RbpStatus rbp_results_copy_mctr(const RbpPredictionResults *results, double *out, size_t len);
 RbpStatus rbp_results_copy_mctp(const RbpPredictionResults *results, double *out, size_t len);
 RbpStatus rbp_results_copy_cctp(const RbpPredictionResults *results, double *out, size_t len);
 RbpStatus rbp_results_copy_xi_solo_composite(const RbpPredictionResults *results, double *out, size_t len);
